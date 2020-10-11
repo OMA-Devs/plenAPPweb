@@ -21,11 +21,13 @@ $result = $con->query($sql);
 echo '<div>';
 echo '<h2 style = "display: inline-block">ESTACIONES</h2>';
 echo '<p class="fa fa-plus w3-button w3-border w3-card-2 w3-right" style = "display: inline-block"></p>';
+echo '<p class="fa fa-pencil w3-button w3-border w3-card-2 w3-right" style = "display: inline-block"></p>';
 echo '</div>';
-echo '<table class="w3-center" style="width:100%">';
-echo '<tr><th>ID</th>';
+echo '<table class="w3-table w3-striped w3-center" style="width:100%">';
+echo '<tr>';
 echo '<th>NOMBRE</th>';
 echo '<th>RESPONSABLE</th>';
+echo '<th>TELEFONO</th>';
 echo '<th>COPIA</th>';
 echo '</tr>';
 if ($result->num_rows > 0) {
@@ -33,9 +35,9 @@ if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
     //ID,NOMBRE,RESPONSABLE,COPIA
     echo '<tr>';
-    echo '<td>'.$row[id].'</td>';
     echo '<td>'.$row[nombre].'</td>';
     echo '<td>'.$row[responsable].'</td>';
+    echo '<td>'.$row[telefono].'</td>';
     echo '<td>'.$row[copia].'</td>';
     echo '</tr>';
   }
