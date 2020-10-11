@@ -1,0 +1,65 @@
+<!--
+   index.html
+   
+   Copyright 2020  <pi@raspberrypi>
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>plenAPP</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 1.33" />
+	<link rel="stylesheet" href="w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="core.js"></script>
+</head>
+
+<body>
+   <div id="header" class="w3-center">
+      <h1 class = "w3-center">INCIDENCIAS PLENOIL</h1>
+      <div id="navBar" class="w3-bar">
+	 <p class ="fa fa-user-o w3-button w3-card-2 w3-border w3-center w3-bar-item"
+	    onclick="calls.login()"></p>
+	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
+	    style="display: none"
+	    onclick="calls.genericLoad([],'estaciones.php','content')">ESTACIONES</p>
+	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
+	    style="display: none">HISTORICOS</p>
+	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
+	    style="display: none">RESPONSABLES</p>
+	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
+	    style="display: none"
+	    onclick="calls.genericLoad(['str=incidencias'],'loadView.php','content')">INCIDENCIA</p>
+	 <p class ="fa fa-sign-out w3-button w3-card-2 w3-border w3-center w3-bar-item"
+	    style="display: none"
+	    onclick="calls.logout(),calls.genericLoad(['str=incidencias'],'loadView.php','content')"></p>
+      </div>
+   </div>
+   <hr>
+   <div id="content">
+
+   </div>
+   <script>calls.genericLoad(['str=incidencias'],'loadView.php','content')</script>
+</body>
+
+</html>
