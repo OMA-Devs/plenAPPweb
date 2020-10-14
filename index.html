@@ -49,17 +49,17 @@
 	    style="display: none">RESPONSABLES</p>
 	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
 	    style="display: none"
-	    onclick="calls.genericLoad(['str=incidencias'],'loadView.php','content')">INCIDENCIA</p>
+	    onclick="calls.genericLoad([],'incidencias.php','content')">INCIDENCIA</p>
 	 <p class ="fa fa-sign-out w3-button w3-card-2 w3-border w3-center w3-bar-item"
 	    style="display: none"
-	    onclick="calls.logout(),calls.genericLoad(['str=incidencias'],'loadView.php','content')"></p>
+	    onclick="calls.logout(),calls.genericLoad([],'incidencias.php','content')"></p>
       </div>
    </div>
    <hr>
    <div id="content">
 
    </div>
-   <script>calls.genericLoad(['str=incidencias'],'loadView.php','content')</script>
+   <script>calls.genericLoad([],'incidencias.php','content')</script>
 </body>
 
 </html>
