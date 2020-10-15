@@ -81,4 +81,4 @@ $con->close();
 <label for="tRespuesta">TIEMPO DE RESPUESTA: </label>
 <input id="tRespuesta" name="tRespuesta"></input>
 <!--p class="w3-button">ADJUNTAR</p-->
-<p class="w3-button">ENVIAR</p>
+<p class="w3-button w3-card-2 w3-border">ENVIAR</p>
