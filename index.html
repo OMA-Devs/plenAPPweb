@@ -52,14 +52,14 @@
 	    onclick="calls.genericLoad([],[],'incidencias.php','content')">INCIDENCIA</p>
 	 <p class ="fa fa-sign-out w3-button w3-card-2 w3-border w3-center w3-bar-item"
 	    style="display: none"
-	    onclick="calls.logout(),calls.genericLoad([],[],'incidencias.php','content')"></p>
+	    onclick="calls.logout(),calls.genericLoad(['type'],['show'],'incidencias.php','content')"></p>
       </div>
    </div>
    <hr>
    <div id="content">
 
    </div>
-   <script>calls.genericLoad([],[],'incidencias.php','content')</script>
+   <!--script>calls.genericLoad(['type'],['show'],'incidencias.php','content')</script-->
 </body>
 
 </html>

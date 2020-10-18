@@ -36,11 +36,11 @@ if ($queryTYPE == "show"){
     while($row = $result->fetch_assoc()) {
       //ID,NOMBRE,RESPONSABLE,COPIA
       echo '<tr>';
-      echo '<td style = "display: none">'.$row[id].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row[nombre].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row[responsable].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row[telefono].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row[copia].'</td>';
+      echo '<td style = "display: none">'.$row["id"].'</td>';
+      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["nombre"].'</td>';
+      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["responsable"].'</td>';
+      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["telefono"].'</td>';
+      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["copia"].'</td>';
       echo '</tr>';
     }
   echo '</table>';

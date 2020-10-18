@@ -1,6 +1,5 @@
 //core.js
 //GLOBALES
-var orgConnected = undefined //Determina la organizacion conectada
 var userConnected = undefined //Determina el usuario conectado
 var selectedRow = undefined //Determina la fila seleccionada
 var edit = false //Determina la posibilidad de editar o no una fila
@@ -163,3 +162,5 @@ var addEstacion = function(){
 	calls.genericLoad(keyARR,valARR,"estaciones.php","")
 	calls.genericLoad(["type"],["show"],"estaciones.php","content")
 }
+
+var tick = setInterval(calls.genericLoad,1500,["type"],["show"],"incidencias.php","content")
