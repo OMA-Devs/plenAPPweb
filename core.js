@@ -12,6 +12,7 @@ var calls = {
 		xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 				if (divTARGET == ""){
+					console.log(this.responseText)
 					alert(this.responseText)
 				}else{
 					var view = document.getElementById(divTARGET);
@@ -110,14 +111,14 @@ var editField = function(element){
 			//Obtenemos los headers de la tabla
 			var tab = document.getElementById("activeTable")
 			var head = tab.children[0].children[0]
-			keyARR = []
+			keyARR = ["type"]
 			for (var i = 0; i<head.children.length; i++){
 				//console.log(head.children[i].innerHTML)
 				//Es importante convertir a minusculas los campos.
 				keyARR.push(head.children[i].innerHTML.toLowerCase())
 			}
 			//Obtenemos los valores de la linea a modificar
-			valARR = []
+			valARR = ["edit"]
 			for (var i = 0; i<element.parentElement.children.length; i++){
 				valARR.push(element.parentElement.children[i].innerHTML)
 			}
@@ -131,8 +132,8 @@ var editField = function(element){
 				var conf = confirm("¿Eliminar esta estacion?")
 				if (conf == true){
 					var idRow = selectedRow.children[0].innerHTML
-					calls.genericLoad(["id"],[idRow],"deleteEstaciones.php","")
-					calls.genericLoad([],[],"estaciones.php","content")
+					calls.genericLoad(["type","id"],["delete",idRow],"estaciones.php","")
+					calls.genericLoad(["type"],["show"],"estaciones.php","content")
 				}
 			}
 		}
@@ -145,18 +146,20 @@ var addEstacion = function(){
 	var head = tab.children[0].children[0]
 	keyARR = []
 	for (var i = 0; i<head.children.length; i++){
-		keyARR.push(head.children[i].innerHTML.toLowerCase())
+		if (head.children[i].innerHTML.toLowerCase() == "id" || head.children[i].innerHTML.toLowerCase() == "copia"){
+			continue
+		}else{
+			keyARR.push(head.children[i].innerHTML.toLowerCase())
+		}
 	}
 	//Solicitamos un valor por cada celda excepto para ID que es AUTOINCREMENT en la base de datos
 	valARR = []
 	for (var i = 0; i<keyARR.length; i++){
-		if (keyARR[i] == "id" || keyARR[i] == "copia"){
-			valARR.push("")
-		} else{
-			var newVal = prompt("Introduce valor para "+keyARR[i], keyARR[i])
-			valARR.push(newVal)
-		}
+		var newVal = prompt("Introduce valor para "+keyARR[i], keyARR[i])
+		valARR.push(newVal)
 	}
-	calls.genericLoad(keyARR,valARR,"addEstaciones.php","")
-	calls.genericLoad([],[],"estaciones.php","content")
+	keyARR.unshift("type")
+	valARR.unshift("add")
+	calls.genericLoad(keyARR,valARR,"estaciones.php","")
+	calls.genericLoad(["type"],["show"],"estaciones.php","content")
 }
