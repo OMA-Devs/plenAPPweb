@@ -15,12 +15,12 @@ if ($con->connect_error) {
 }
 ?>
 
-<h2 class = "w3-center">¿Hay llamada?</h2>
+<!--h2 class = "w3-center">¿Hay llamada?</h2>
 <div class = "w3-center" style= "width:100%">
 	<p class="w3-button w3-jumbo w3-green" style= "width: 20%">SI</p>
 	<p class="w3-button w3-jumbo w3-red" style= "width: 20%">NO</p>
 </div>
-<hr>
+<hr-->
 <label for="incidencia">INCIDENCIA: </label>
 <select id="incidencia" name="incidencia">
 
