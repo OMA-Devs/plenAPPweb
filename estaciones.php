@@ -18,9 +18,9 @@ if ($queryTYPE == "show"){
   ?>
   <div>
   <h2 style = 'display: inline-block'>ESTACIONES</h2>
-  <p class='fa fa-plus w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = addEstacion()></p>
-  <p class='fa fa-pencil w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = toogleEdit(this)></p>
-  <p class='fa fa-trash-o w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = toogleDelete(this)></p>
+  <p class='fa fa-plus w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreACTIONS.addEstacion()></p>
+  <p class='fa fa-pencil w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreUI.toogleEdit(this)></p>
+  <p class='fa fa-trash-o w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreUI.toogleDelete(this)></p>
   </div>
   <table id='activeTable' class='w3-table w3-striped w3-center' style='width:100%'>
   <tr>
@@ -37,10 +37,10 @@ if ($queryTYPE == "show"){
       //ID,NOMBRE,RESPONSABLE,COPIA
       echo '<tr>';
       echo '<td style = "display: none">'.$row["id"].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["nombre"].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["responsable"].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["telefono"].'</td>';
-      echo '<td onclick=getValue(this.parentElement),editField(this)>'.$row["copia"].'</td>';
+      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editEstacion(this)>'.$row["nombre"].'</td>';
+      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editEstacion(this)>'.$row["responsable"].'</td>';
+      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editEstacion(this)>'.$row["telefono"].'</td>';
+      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editEstacion(this)>'.$row["copia"].'</td>';
       echo '</tr>';
     }
   echo '</table>';
