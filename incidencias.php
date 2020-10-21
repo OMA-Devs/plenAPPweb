@@ -55,9 +55,15 @@ if ($queryTYPE == "add"){
     echo 'Numero de telefono no coincidente con la base de datos.';
   }
   $con->close();
-}elseif ($queryTYPE == "show"){
+}elseif ($queryTYPE == "getAbiertas"){
   $inc_abiertas = $con->query("SELECT * FROM inc_abiertas");
-  //Extraemos los preset de incidencias a un array para uso multiple
+  $incARR = array();
+  while ($inc = $inc_abiertas->fetch_assoc()){
+    array_push($incARR, $inc);
+  }
+  $myJSON = json_encode($incARR);
+  echo $myJSON;
+}elseif ($queryTYPE == "getPresets"){
   $incARR = array();
   $incidenciasRES = $con->query("SELECT * FROM presets WHERE tipo = 'incidencia'");
   while($incOPT = $incidenciasRES->fetch_assoc()) {
@@ -75,21 +81,12 @@ if ($queryTYPE == "add"){
   while($incOPT = $llamadaDERES->fetch_assoc()) {
     array_push($llamARR,$incOPT["nombre"]);
   }
-  ?>
-  <div class="w3-cell-row">
-  <?php
-  while ($inc = $inc_abiertas->fetch_assoc()){
-    echo '<div id ="'.$inc["fecha"].'" class="w3-cell w3-border">';
-    echo '<h2 class = "w3-center">'.$inc["estacion"]."</h2>";
-    echo '<label for="incidencia-'.$inc["fecha"].'">INCIDENCIA: </label>';
-    echo '<select id="incidencia-'.$inc["fecha"].'" name="incidencia">';
-    echo '<hr>'; 
-    for($x = 0; $x < count($incARR); $x++) {
-      echo '<option value="'.$incARR[$x].'">'.$incARR[$x].'</option>';
-    } ?>
-    </select>
-  </div>
-  <?php
-  }
+  $myJSON->incidencias = $incARR;
+  $myJSON->resoluciones = $resARR;
+  $myJSON->llamadaDE = $llamARR;
+
+  $myJSON = json_encode($myJSON);
+
+  echo $myJSON;
 }
 ?>

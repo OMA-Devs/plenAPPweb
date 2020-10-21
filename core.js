@@ -25,6 +25,17 @@ var edit = false //Determina la posibilidad de editar o no una fila
  */
 var delRow = false //Determina la funcion de eliminado de una fila
 
+var presets;
+var incAbiertas;
+
+var incidenciasInterval;
+
+var tools = {
+	capitalizeFirstLetter : function(str) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	  }
+}
+
 /** Incluye todas las llamadas a servidor con sus respectivos argumentos.
  * @namespace
  */
@@ -178,6 +189,95 @@ var coreUI = {
 			node.style = "background-color: red"
 			delRow = true
 		}
+	},
+	createIncidencia : function(obj){
+		//determinamos el ID de la incidencia.
+		var incID = obj.id
+		//Se crea el elemento padre de la incidencia
+		var incDIV = document.createElement("div")
+		incDIV.setAttribute("id",incID)
+		incDIV.setAttribute("class", "w3-cell w3-mobile w3-border w3-container")
+		//Se crea el header de la incidencia
+		//El header contiene NOMBRE DE LA ESTACION y FECHA
+		var headDIV = document.createElement("h2")
+		headDIV.innerHTML = tools.capitalizeFirstLetter(obj.estacion)
+		headDIV.setAttribute("class","w3-center")
+		var timeOBJ = document.createElement("p")
+		var incDATE = new Date(obj.fecha)
+		timeOBJ.innerHTML = incDATE.toLocaleString()
+		//timeOBJ.setAttribute("id", "datetime-"+incID)
+		timeOBJ.setAttribute("class", "w3-center")
+		incDIV.appendChild(headDIV)
+		incDIV.appendChild(timeOBJ)
+		incDIV.appendChild(document.createElement("hr"))
+		//Se crea el SELECT de INCIDENCIA y sus opciones
+		var incLAB = document.createElement("label")
+		incLAB.setAttribute("for","incidencia-"+incID)
+		incLAB.innerHTML = "INCIDENCIA: "
+		var selINC = document.createElement("select")
+		selINC.setAttribute("id", "incidencia-"+incID)
+		for (var x = 0; x<presets.incidencias.length; x++){
+			var opt = document.createElement("option")
+			opt.value = presets.incidencias[x]
+			opt.innerHTML = presets.incidencias[x]
+			selINC.appendChild(opt)
+		}
+		incDIV.appendChild(incLAB)
+		incDIV.appendChild(selINC)
+		incDIV.appendChild(document.createElement("br"))
+		//Se crea el SELECT de RESOLUCIONES y sus opciones
+		var incLAB = document.createElement("label")
+		incLAB.setAttribute("for","resoluciones-"+incID)
+		incLAB.innerHTML = "RESOLUCION: "
+		var selINC = document.createElement("select")
+		selINC.setAttribute("id", "resoluciones-"+incID)
+		for (var x = 0; x<presets.resoluciones.length; x++){
+			var opt = document.createElement("option")
+			opt.value = presets.resoluciones[x]
+			opt.innerHTML = presets.resoluciones[x]
+			selINC.appendChild(opt)
+		}
+		incDIV.appendChild(incLAB)
+		incDIV.appendChild(selINC)
+		incDIV.appendChild(document.createElement("br"))
+		return incDIV
+	},
+	updateIncidencias : function(){
+		coreACTIONS.getIncAbiertas()
+		var contenido = document.getElementById("content")
+		for (var i = 0; i<incAbiertas.length; i++){
+			//console.log(incAbiertas[i])
+			var repeat = false
+			var instance;
+			for (var x = 0; x<contenido.children.length; x++){
+				//console.log(contenido.children[x])
+				if (incAbiertas[i].id == contenido.children[x].id){
+					repeat = true
+				}
+			}
+			if (repeat == false){
+				contenido.appendChild(coreUI.createIncidencia(incAbiertas[i]))
+			}
+		}
+	},
+	setupIncidencias : function(){
+		var cont = document.getElementById("content")
+		cont.innerHTML = ""
+		//var incCONT = document.createElement("div")
+		cont.setAttribute("class", "w3-cell-row")
+		coreACTIONS.getIncAbiertas()
+		for (var i = 0; i<incAbiertas.length; i++){
+			cont.appendChild(coreUI.createIncidencia(incAbiertas[i]))
+		}
+	},
+	initializeIncidencias: function(){
+		coreUI.clearIntervals()
+		coreUI.setupIncidencias()
+		coreUI.updateIncidencias()
+		incidenciasInterval = setInterval(coreUI.updateIncidencias, 1500)
+	},
+	clearIntervals : function(){
+		clearInterval(incidenciasInterval)
 	}
 }
 
@@ -217,7 +317,7 @@ var coreACTIONS = {
 					valARR.push(element.parentElement.children[i].innerHTML)
 				}
 				//Mandamos los datos al servidor.
-				calls.genericLoad(keyARR,valARR,"editEstaciones.php","")
+				calls.genericLoad(keyARR,valARR,"estaciones.php","")
 			}
 			if (delRow == true){
 				if (selectedRow == undefined){
@@ -259,7 +359,31 @@ var coreACTIONS = {
 		valARR.unshift("add")
 		calls.genericLoad(keyARR,valARR,"estaciones.php","")
 		calls.genericLoad(["type"],["show"],"estaciones.php","content")
-	}
+	},
+	getPresets : function(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				presets = JSON.parse(this.responseText)
+			}
+		};
+		var query = "incidencias.php?type=getPresets"
+		console.log(query)
+		xhttp.open("GET", query, false);
+		xhttp.send();	
+	},
+	getIncAbiertas : function(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				incAbiertas = JSON.parse(this.responseText)
+			}
+		};
+		var query = "incidencias.php?type=getAbiertas"
+		console.log(query)
+		xhttp.open("GET", query, false);
+		xhttp.send();	
+	},
 }
 
 

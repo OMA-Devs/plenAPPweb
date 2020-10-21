@@ -36,30 +36,30 @@
 
 <body>
    <div id="header" class="w3-center">
-      <h1 class = "w3-center">INCIDENCIAS PLENOIL</h1>
+      <img src="Logo.png" class = "w3-center"><br>
       <div id="navBar" class="w3-bar">
 	 <p class ="fa fa-user-o w3-button w3-card-2 w3-border w3-center w3-bar-item"
 	    onclick="calls.login()"></p>
 	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
 	    style="display: none"
-	    onclick="calls.genericLoad(['type'],['show'],'estaciones.php','content')">ESTACIONES</p>
+	    onclick="coreUI.clearIntervals(), calls.genericLoad(['type'],['show'],'estaciones.php','content'), coreUI.resetGlobals()">ESTACIONES</p>
 	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
 	    style="display: none">HISTORICOS</p>
 	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
 	    style="display: none">RESPONSABLES</p>
 	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
 	    style="display: none"
-	    onclick="calls.genericLoad([],[],'incidencias.php','content')">INCIDENCIA</p>
+	    onclick="coreUI.initializeIncidencias()">INCIDENCIA</p>
 	 <p class ="fa fa-sign-out w3-button w3-card-2 w3-border w3-center w3-bar-item"
 	    style="display: none"
-	    onclick="calls.logout(),calls.genericLoad(['type'],['show'],'incidencias.php','content')"></p>
+	    onclick="calls.logout(),coreUI.initializeIncidencias()"></p>
       </div>
    </div>
    <hr>
    <div id="content">
 
    </div>
-   <!--script>calls.genericLoad(['type'],['show'],'incidencias.php','content')</script-->
+   <script>coreACTIONS.getPresets()</script>
 </body>
 
 </html>
