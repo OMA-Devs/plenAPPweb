@@ -90,13 +90,14 @@ var calls = {
 			//console.log(this.responseText)
 			var resp = JSON.parse(this.responseText)
 				if(resp.resp == "Login Correcto"){
-					console.log(resp.usuario)
+					//console.log(resp.usuario)
 					alert("Login Correcto")
 					userConnected = resp.usuario
 					var bar = document.getElementById("navBar")
 					for(var i = 0; i<bar.children.length; i++){
 						bar.children[i].style = "display: inline-block"
 					}
+					document.getElementById("content").innerHTML = ""
 				}else{
 					//console.log(this.responseText)
 					alert("Login Incorrecto")
