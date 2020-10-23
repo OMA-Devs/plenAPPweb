@@ -39,7 +39,8 @@
       <img src="Logo.png" class = "w3-center"><br>
       <div id="navBar" class="w3-bar">
 	 <p class ="fa fa-user-o w3-button w3-card-2 w3-border w3-center w3-bar-item"
-	    onclick="calls.login()"></p>
+       onclick=""
+       style = "display:none"></p>
 	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
 	    style="display: none"
 	    onclick="coreUI.clearIntervals(), calls.genericLoad(['type'],['show'],'estaciones.php','content'), coreUI.resetGlobals()">ESTACIONES</p>
@@ -59,7 +60,7 @@
    <div id="content">
 
    </div>
-   <script>coreACTIONS.getPresets()</script>
+   <script>coreACTIONS.getPresets(), calls.genericLoad(['type'],['show'],'auth.php','content')</script>
 </body>
 
 </html>

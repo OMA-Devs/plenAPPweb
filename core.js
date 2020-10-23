@@ -3,7 +3,7 @@
 /**
  * Representa al usuario conectado. Utilizado para nombrar las incidencias y
  * determinar los permisos dentro de la aplicacion.
- * @member {String}
+ * @member {Object}
  */
 var userConnected = undefined
 
@@ -82,15 +82,17 @@ var calls = {
 	 * @see userConnected
 	 */
 	login: function(){
-		var user = prompt("Introduzca usuario:","usuario")
-		var pass = prompt("Introduzca contraseña:","contraseña")
+		var user = document.getElementById("usr").value
+		var pass = document.getElementById("pass").value
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-				if(this.responseText == "Login Correcto"){
-					//console.log(this.responseText)
+			//console.log(this.responseText)
+			var resp = JSON.parse(this.responseText)
+				if(resp.resp == "Login Correcto"){
+					console.log(resp.usuario)
 					alert("Login Correcto")
-					userConnected = user
+					userConnected = resp.usuario
 					var bar = document.getElementById("navBar")
 					for(var i = 0; i<bar.children.length; i++){
 						bar.children[i].style = "display: inline-block"
@@ -101,10 +103,10 @@ var calls = {
 				}
 			}
 		};
-		var query = "auth.php?"
-		query += "usr="+user
+		var query = "auth.php?type=auth"
+		query += "&usr="+user
 		query += "&pass="+pass
-		//console.log(query)
+		console.log(query)
 		xhttp.open("GET", query, true);
 		xhttp.send();
 	},
@@ -196,9 +198,9 @@ var coreUI = {
 		//Se crea el elemento padre de la incidencia
 		var incDIV = document.createElement("div")
 		incDIV.setAttribute("id",incID)
-		incDIV.setAttribute("class", "w3-cell w3-mobile w3-border w3-container")
+		incDIV.setAttribute("class", "w3-cell w3-quarter w3-border w3-container")
 		//Se crea el header de la incidencia
-		//El header contiene NOMBRE DE LA ESTACION y FECHA
+		//El header contiene NOMBRE DE LA ESTACION,FECHA y CANTIDAD DE LLAMADAS
 		var headDIV = document.createElement("h2")
 		headDIV.innerHTML = tools.capitalizeFirstLetter(obj.estacion)
 		headDIV.setAttribute("class","w3-center")
@@ -207,8 +209,13 @@ var coreUI = {
 		timeOBJ.innerHTML = incDATE.toLocaleString()
 		//timeOBJ.setAttribute("id", "datetime-"+incID)
 		timeOBJ.setAttribute("class", "w3-center")
+		var llamadas = document.createElement("p")
+		llamadas.setAttribute("id", "llamadas-"+incID)
+		llamadas.setAttribute("class", "w3-center")
+		llamadas.innerHTML = "Llamadas: "+obj.llamadas
 		incDIV.appendChild(headDIV)
 		incDIV.appendChild(timeOBJ)
+		incDIV.appendChild(llamadas)
 		incDIV.appendChild(document.createElement("hr"))
 		//Se crea el SELECT de INCIDENCIA y sus opciones
 		var incLAB = document.createElement("label")
@@ -240,7 +247,33 @@ var coreUI = {
 		incDIV.appendChild(incLAB)
 		incDIV.appendChild(selINC)
 		incDIV.appendChild(document.createElement("br"))
+		//Se crea el SELECT de LLAMADA DE y sus opciones
+		var incLAB = document.createElement("label")
+		incLAB.setAttribute("for","llamadaDE-"+incID)
+		incLAB.innerHTML = "LLAMADA DE: "
+		var selINC = document.createElement("select")
+		selINC.setAttribute("id", "llamadaDE-"+incID)
+		for (var x = 0; x<presets.llamadaDE.length; x++){
+			var opt = document.createElement("option")
+			opt.value = presets.llamadaDE[x]
+			opt.innerHTML = presets.llamadaDE[x]
+			selINC.appendChild(opt)
+		}
+		incDIV.appendChild(incLAB)
+		incDIV.appendChild(selINC)
+		incDIV.appendChild(document.createElement("br"))
 		return incDIV
+	},
+	deleteIncidencia : function(id){
+		var inc = document.getElementById(id)
+		var parentNODE = inc.parentElement
+		parentNODE.removeChild(inc)
+		console.log("Incidencia eliminada")
+	},
+	editIncidencia : function(idTARGET, text){
+		var inc = document.getElementById(idTARGET)
+		inc.innerHTML = text
+		console.log("Incidencia modificada")
 	},
 	updateIncidencias : function(){
 		coreACTIONS.getIncAbiertas()
@@ -253,6 +286,12 @@ var coreUI = {
 				//console.log(contenido.children[x])
 				if (incAbiertas[i].id == contenido.children[x].id){
 					repeat = true
+					var llamadas = document.getElementById("llamadas-"+contenido.children[x].id).innerHTML.split(" ")[1]
+					if (incAbiertas[i].llamadas != llamadas){
+						coreUI.editIncidencia("llamadas-"+contenido.children[x].id,"Llamadas: "+incAbiertas[i].llamadas)
+						//coreUI.deleteIncidencia(contenido.children[x].id)
+						//contenido.appendChild(coreUI.createIncidencia(incAbiertas[i]))
+					}
 				}
 			}
 			if (repeat == false){
