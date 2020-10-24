@@ -93,10 +93,17 @@ var calls = {
 					//console.log(resp.usuario)
 					alert("Login Correcto")
 					userConnected = resp.usuario
-					var bar = document.getElementById("navBar")
-					for(var i = 0; i<bar.children.length; i++){
-						bar.children[i].style = "display: inline-block"
+					if (userConnected.PERMadmin == "1"){
+						document.getElementById("administracion").style = "display:inline-block"
 					}
+					if (userConnected.PERMhistoricos == "1"){
+						document.getElementById("historicos").style = "display:inline-block"
+					}
+					if (userConnected.PERMincidencias == "1"){
+						document.getElementById("incidencias").style = "display:inline-block"
+					}
+					document.getElementById("user").style = "display:inline-block"
+					document.getElementById("logout").style = "display:inline-block"
 					document.getElementById("content").innerHTML = ""
 				}else{
 					//console.log(this.responseText)
@@ -119,9 +126,11 @@ var calls = {
 	logout: function(){
 		userConnected = undefined
 		var bar = document.getElementById("navBar")
-		for(var i = 1; i<bar.children.length; i++){
+		for(var i = 0; i<bar.children.length; i++){
 			bar.children[i].style = "display: none"
 		}
+		coreUI.clearIntervals()
+		calls.genericLoad(['type'],['show'],'auth.php','content')
 	}
 }
 

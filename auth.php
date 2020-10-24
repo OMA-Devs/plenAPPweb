@@ -9,11 +9,12 @@ if ($queryTYPE == "show"){
 	<div class = "w3-content" style="width: 30%">
 		<input type="text" id="usr" class="w3-xxlarge" style = "width: 100%" placeholder="Usuario">
 		<br>
-		<input type="text" id="pass" class="w3-xxlarge" style = "width: 100%" placeholder="Password">
+		<input type="password" id="pass" class="w3-xxlarge" style = "width: 100%" placeholder="Password">
 		<br>
 		<p class="w3-button w3-border w3-xxlarge" style = "width:100%" onclick="calls.login()">Acceder</p>
 	</div>
 	<?php
+	$con->close();
 }elseif ($queryTYPE == "auth"){
 	$queryUSER = $_REQUEST["usr"];
 	$queryPASS = $_REQUEST["pass"];
