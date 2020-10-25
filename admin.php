@@ -13,7 +13,16 @@ comprueba en un bucle inicial IF para saber que parte del SCRIPT ejecutar.
 $queryTYPE = $_REQUEST["type"];
 
 if ($queryTYPE == "show"){
-	echo "PAGINA DE ADMINISTRACION. EN PROGRESO";
+	?>
+	<div class="w3-content" style="width: 30%">
+		<p class="w3-button w3-border w3-xxlarge w3-center" style="width: 100%"
+			onclick = "calls.genericLoad(['type'],['show'],'estaciones.php','content')">Estaciones</p>
+		<p class="w3-button w3-border w3-xxlarge w3-center" style="width: 100%"
+			onclick = "calls.genericLoad(['type'],['show'],'responsables.php','content')">Responsables</p>
+		<p class="w3-button w3-border w3-xxlarge w3-center" style="width: 100%"
+			onclick = "calls.genericLoad(['type'],['show'],'presets.php','content')">Presets</p>
+	</div>
+	<?php
 }elseif ($queryTYPE == "add"){
 
 }elseif ($queryTYPE == "delete"){

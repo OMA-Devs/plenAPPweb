@@ -13,12 +13,12 @@ comprueba en un bucle inicial IF para saber que parte del SCRIPT ejecutar.
 $queryTYPE = $_REQUEST["type"];
 
 if ($queryTYPE == "show"){
-  $sql = "SELECT * FROM estaciones";
+  $sql = "SELECT * FROM presets";
   $result = $con->query($sql);
   ?>
   <div>
-  <h2 style = 'display: inline-block'>ESTACIONES</h2>
-  <p class='fa fa-plus w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreACTIONS.addRow("estaciones.php")></p>
+  <h2 style = 'display: inline-block'>PREDEFINIDAS</h2>
+  <p class='fa fa-plus w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreACTIONS.addRow("presets.php")></p>
   <p class='fa fa-pencil w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreUI.toogleEdit(this)></p>
   <p class='fa fa-trash-o w3-button w3-border w3-card-2 w3-right' style = 'display: inline-block' onclick = coreUI.toogleDelete(this)></p>
   </div>
@@ -26,9 +26,7 @@ if ($queryTYPE == "show"){
   <tr>
     <th style = 'display: none'>ID</th>
     <th>NOMBRE</th>
-    <th>RESPONSABLE</th>
-    <th>TELEFONO</th>
-    <th>COPIA</th>
+    <th>TIPO</th>
   </tr>
   <?php
   if ($result->num_rows > 0) {
@@ -37,10 +35,8 @@ if ($queryTYPE == "show"){
       //ID,NOMBRE,RESPONSABLE,COPIA
       echo '<tr>';
       echo '<td style = "display: none">'.$row["id"].'</td>';
-      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editTable(this,"estaciones.php")>'.$row["nombre"].'</td>';
-      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editTable(this,"estaciones.php")>'.$row["responsable"].'</td>';
-      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editTable(this,"estaciones.php")>'.$row["telefono"].'</td>';
-      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editTable(this,"estaciones.php")>'.$row["copia"].'</td>';
+      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editTable(this,"presets.php")>'.$row["nombre"].'</td>';
+      echo '<td onclick=coreUI.getValue(this.parentElement),coreACTIONS.editTable(this,"presets.php")>'.$row["tipo"].'</td>';
       echo '</tr>';
     }
   echo '</table>';
@@ -48,10 +44,9 @@ if ($queryTYPE == "show"){
   $con->close();
 }elseif ($queryTYPE == "add"){
   $queryNOMBRE = $_REQUEST["nombre"];
-  $queryRESPONSABLE = $_REQUEST["responsable"];
-  $queryTELEFONO = $_REQUEST["telefono"];
+  $queryTIPO = $_REQUEST["tipo"];
 
-  $sql = "INSERT INTO estaciones (nombre, responsable, telefono) VALUES ('".$queryNOMBRE."','".$queryRESPONSABLE."',".$queryTELEFONO.")";
+  $sql = "INSERT INTO presets (nombre, tipo) VALUES ('".$queryNOMBRE."','".$queryTIPO."')";
   $result = $con->query($sql);
   if ($result > 0) {
     echo "Insercion Correcta";
@@ -62,7 +57,7 @@ if ($queryTYPE == "show"){
 }elseif ($queryTYPE == "delete"){
   $queryID = $_REQUEST["id"];
 
-  $sql = "DELETE FROM estaciones WHERE id = ".$queryID;
+  $sql = "DELETE FROM presets WHERE id = ".$queryID;
   $result = $con->query($sql);
   //echo $sql;
   //echo $result;
@@ -75,11 +70,9 @@ if ($queryTYPE == "show"){
 }elseif ($queryTYPE == "edit"){
   $queryID = $_REQUEST["id"];
   $queryNOMBRE = $_REQUEST["nombre"];
-  $queryRESPONSABLE = $_REQUEST["responsable"];
-  $queryTELEFONO = $_REQUEST["telefono"];
-  $queryCOPIA = $_REQUEST["copia"];
+  $queryTIPO = $_REQUEST["tipo"];
 
-  $sql = "UPDATE estaciones SET nombre = '".$queryNOMBRE."', responsable = '".$queryRESPONSABLE."', telefono = ".$queryTELEFONO.", copia = '".$queryCOPIA."' WHERE id = ".$queryID;
+  $sql = "UPDATE presets SET nombre = '".$queryNOMBRE."', tipo = '".$queryTIPO."' WHERE id = ".$queryID;
   $result = $con->query($sql);
   //echo $result;
   if ($result > 0) {

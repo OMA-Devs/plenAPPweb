@@ -50,6 +50,7 @@ var calls = {
 	 * respuesta se dará en un alert, y si no se modificará el elemento entregado.
 	 */
 	genericLoad: function(keyARR, valARR, fileTARGET, divTARGET){
+		coreUI.clearIntervals()
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -335,16 +336,7 @@ var coreUI = {
  * @namespace
  */
 var coreACTIONS = {
-	/**
-	 * Función para editar y eliminar objetos de la interfaz relacionada con "ESTACIONES". Contiene la funcionalidad
-	 * de seguridad necesaria para no tener el modo de edicion y eliminacion conjuntamente, y efectua la funcion
-	 * necesaria dependiendo de las variables activas.
-	 * @param {HTMLElement} element Campo pulsado especificamente. Se utiliza en el modo edicion. En el modo
-	 * eliminacion se utiliza para determinar la fila padre a eliminar.
-	 * @see edit
-	 * @see delRow
-	 */
-	editEstacion : function(element){
+	editTable : function(element, target){
 		if (edit == true && delRow == true){
 			alert("Edicion y eliminado estan activados a la vez. Desactiva uno")
 		} else{
@@ -366,27 +358,24 @@ var coreACTIONS = {
 					valARR.push(element.parentElement.children[i].innerHTML)
 				}
 				//Mandamos los datos al servidor.
-				calls.genericLoad(keyARR,valARR,"estaciones.php","")
+				calls.genericLoad(keyARR,valARR,target,"")
 			}
 			if (delRow == true){
 				if (selectedRow == undefined){
 					alert("Selecciona una fila para eliminar")
 				}else{
-					var conf = confirm("¿Eliminar esta estacion?")
+					var conf = confirm("¿Eliminar esta entrada?")
 					if (conf == true){
 						var idRow = selectedRow.children[0].innerHTML
-						calls.genericLoad(["type","id"],["delete",idRow],"estaciones.php","")
-						calls.genericLoad(["type"],["show"],"estaciones.php","content")
+						calls.genericLoad(["type","id"],["delete",idRow],target,"")
+						calls.genericLoad(["type"],["show"],target,"content")
+						coreUI.resetGlobals()
 					}
 				}
 			}
 		}
 	},
-	/**
-	 * Funcion para añadir estaciones desde la interfaz grafica. Contiene la llamada concreta al servidor.
-	 * Se encarga de generar el query necesario y solicitar los datos de la nueva entrada.
-	 */
-	addEstacion : function(){
+	addRow : function(target){
 		//Obtenemos los headers de la tabla
 		var tab = document.getElementById("activeTable")
 		var head = tab.children[0].children[0]
@@ -406,8 +395,9 @@ var coreACTIONS = {
 		}
 		keyARR.unshift("type")
 		valARR.unshift("add")
-		calls.genericLoad(keyARR,valARR,"estaciones.php","")
-		calls.genericLoad(["type"],["show"],"estaciones.php","content")
+		calls.genericLoad(keyARR,valARR,target,"")
+		calls.genericLoad(["type"],["show"],target,"content")
+		coreUI.resetGlobals()
 	},
 	getPresets : function(){
 		var xhttp = new XMLHttpRequest();
@@ -432,10 +422,5 @@ var coreACTIONS = {
 		console.log(query)
 		xhttp.open("GET", query, false);
 		xhttp.send();	
-	},
+	}
 }
-
-
-
-
-//var tick = setInterval(calls.genericLoad,1500,["type"],["show"],"incidencias.php","content")
