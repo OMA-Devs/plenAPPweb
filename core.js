@@ -359,6 +359,9 @@ var coreACTIONS = {
 				}
 				//Mandamos los datos al servidor.
 				calls.genericLoad(keyARR,valARR,target,"")
+				if (target == "presets.php"){
+					coreACTIONS.getPresets()
+				}
 			}
 			if (delRow == true){
 				if (selectedRow == undefined){
@@ -370,6 +373,9 @@ var coreACTIONS = {
 						calls.genericLoad(["type","id"],["delete",idRow],target,"")
 						calls.genericLoad(["type"],["show"],target,"content")
 						coreUI.resetGlobals()
+						if (target == "presets.php"){
+							coreACTIONS.getPresets()
+						}
 					}
 				}
 			}
@@ -398,6 +404,9 @@ var coreACTIONS = {
 		calls.genericLoad(keyARR,valARR,target,"")
 		calls.genericLoad(["type"],["show"],target,"content")
 		coreUI.resetGlobals()
+		if (target == "presets.php"){
+			coreACTIONS.getPresets()
+		}
 	},
 	getPresets : function(){
 		var xhttp = new XMLHttpRequest();
