@@ -132,6 +132,14 @@ var calls = {
 		}
 		coreUI.clearIntervals()
 		calls.genericLoad(['type'],['show'],'auth.php','content')
+	},
+	queryHistorico : function(){
+		var startDATE = document.getElementById("date_inicio").value
+		var endDATE = document.getElementById("date_final").value
+		var estacion = document.getElementById("estaciones").value
+		var keyARR = ["type","startDATE", "endDATE", "estacion"]
+		var valARR = ["request",startDATE, endDATE, estacion]
+		calls.genericLoad(keyARR,valARR,"historicos.php","hList")
 	}
 }
 
@@ -218,7 +226,6 @@ var coreUI = {
 		var timeOBJ = document.createElement("p")
 		var incDATE = new Date(obj.fecha)
 		timeOBJ.innerHTML = incDATE.toLocaleString()
-		//timeOBJ.setAttribute("id", "datetime-"+incID)
 		timeOBJ.setAttribute("class", "w3-center")
 		var llamadas = document.createElement("p")
 		llamadas.setAttribute("id", "llamadas-"+incID)
@@ -272,6 +279,23 @@ var coreUI = {
 		}
 		incDIV.appendChild(incLAB)
 		incDIV.appendChild(selINC)
+		incDIV.appendChild(document.createElement("br"))
+		//TELEFONO DE GUARDIA (LABEL, SELECT)
+		var labelTELF = document.createElement("label")
+		labelTELF.setAttribute("for", "telefonoguardia-"+incID)
+		labelTELF.innerHTML = "TELEFONO DE GUARDIA: "
+		var selectTELF = document.createElement("select")
+		selectTELF.setAttribute("id","telefonoguardia-"+incID)
+		var opYES = document.createElement("option")
+		opYES.setAttribute("value", "si")
+		opYES.innerHTML = "si"
+		var opNO = document.createElement("option")
+		opNO.setAttribute("value", "no")
+		opNO.innerHTML = "no"
+		selectTELF.appendChild(opYES)
+		selectTELF.appendChild(opNO)
+		incDIV.appendChild(labelTELF)
+		incDIV.appendChild(selectTELF)
 		incDIV.appendChild(document.createElement("br"))
 		return incDIV
 	},
@@ -359,6 +383,7 @@ var coreACTIONS = {
 				}
 				//Mandamos los datos al servidor.
 				calls.genericLoad(keyARR,valARR,target,"")
+				coreUI.resetGlobals()
 				if (target == "presets.php"){
 					coreACTIONS.getPresets()
 				}
