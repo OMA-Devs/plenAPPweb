@@ -24,8 +24,13 @@ if ($queryTYPE == "show"){
 	$result = $con->query($sql);
 
 	if ($result->num_rows > 0) {
+		//session_start();
 	// output data of each row
 		while($row = $result->fetch_assoc()) {
+			/*$_SESSION["nombre"] = $row["nombre"];
+			$_SESSION["PERMadmin"] = $row["PERMadmin"];
+			$_SESSION["PERMhistoricos"] = $row["PERMhistoricos"];
+			$_SESSION["PERMincidencias"] = $row["PERMincidencias"];*/
 			$myJSON->usuario = $row;
 			$myJSON->resp = "Login Correcto";
 			$myJSON = json_encode($myJSON);

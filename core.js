@@ -137,9 +137,32 @@ var calls = {
 		var startDATE = document.getElementById("date_inicio").value
 		var endDATE = document.getElementById("date_final").value
 		var estacion = document.getElementById("estaciones").value
-		var keyARR = ["type","startDATE", "endDATE", "estacion"]
-		var valARR = ["request",startDATE, endDATE, estacion]
+		var abiertas = document.getElementById("abiertas").checked
+		var incompletas = document.getElementById("incompletas").checked
+		var completadas = document.getElementById("completadas").checked
+		var revision = document.getElementById("revision").checked
+		var keyARR = ["type","startDATE", "endDATE", "estacion","abiertas","incompletas","completadas","revision"]
+		var valARR = ["request",startDATE, endDATE, estacion,abiertas, incompletas, completadas, revision]
 		calls.genericLoad(keyARR,valARR,"historicos.php","hList")
+	},
+	endIncidencia : function(id){
+		//var divTARGET = document.getElementById(id)
+		var fecha = document.getElementById("fecha-"+id).innerHTML
+		//NO PASA LA FECHA EN EL ORDEN CORRECTO. SOLUCIONADO EL PROBLEMA DE LOS GUIONES, PERO Y QUE??!?!?!?!?!?
+		fecha = fecha.replace(/\//g, "-")
+		var nombre = document.getElementById("nombre-"+id).innerHTML.toLowerCase()
+		var llamadas = document.getElementById("llamadas-"+id).innerHTML.split(" ")[1]
+		var incidencia = document.getElementById("incidencia-"+id).value
+		var resolucion = document.getElementById("resoluciones-"+id).value
+		var llamadaDE = document.getElementById("llamadaDE-"+id).value
+		var telefonoguardia = document.getElementById("telefonoguardia-"+id).value
+		var incompleto = document.getElementById("incompleto-"+id).checked
+		var revision = document.getElementById("revision-"+id).checked
+
+		var keyARR = ["type","id","fecha","nombre","llamadas","incidencia","resolucion","llamadaDE","telefonoguardia","incompleto","revision"]
+		var valARR = ["close",id, fecha,nombre,llamadas,incidencia, resolucion, llamadaDE, telefonoguardia, incompleto, revision]
+		calls.genericLoad(keyARR,valARR,"incidencias.php","")
+		coreUI.deleteIncidencia(id)
 	}
 }
 
@@ -223,8 +246,10 @@ var coreUI = {
 		var headDIV = document.createElement("h2")
 		headDIV.innerHTML = tools.capitalizeFirstLetter(obj.estacion)
 		headDIV.setAttribute("class","w3-center")
+		headDIV.setAttribute("id", "nombre-"+incID)
 		var timeOBJ = document.createElement("p")
 		var incDATE = new Date(obj.fecha)
+		timeOBJ.setAttribute("id", "fecha-"+incID)
 		timeOBJ.innerHTML = incDATE.toLocaleString()
 		timeOBJ.setAttribute("class", "w3-center")
 		var llamadas = document.createElement("p")
@@ -296,6 +321,33 @@ var coreUI = {
 		selectTELF.appendChild(opNO)
 		incDIV.appendChild(labelTELF)
 		incDIV.appendChild(selectTELF)
+		incDIV.appendChild(document.createElement("br"))
+		//OPCIONES DE CIERRE Y BOTON
+		var labINCOMPLETO = document.createElement("label")
+		labINCOMPLETO.innerHTML = "INCOMPLETO"
+		labINCOMPLETO.setAttribute("for", "incompleto-"+incID)
+		var incompleto = document.createElement("input")
+		incompleto.setAttribute("type", "checkbox")
+		incompleto.setAttribute("id", "incompleto-"+incID)
+		var labREVISION = document.createElement("label")
+		labREVISION.setAttribute("for", "revision-"+incID)
+		labREVISION.innerHTML = "REVISION"
+		var revision = document.createElement("input")
+		revision.setAttribute("type", "checkbox")
+		revision.setAttribute("id", "revision-"+incID)
+		var cerrar = document.createElement("p")
+		cerrar.innerHTML = "Cerrar"
+		cerrar.setAttribute("class", "w3-button w3-border")
+		cerrar.setAttribute("onclick","calls.endIncidencia('"+incID+"')")
+		cerrar.style.width = "100%"
+		incDIV.appendChild(document.createElement("hr"))
+		incDIV.appendChild(labINCOMPLETO)
+		incDIV.appendChild(incompleto)
+		incDIV.appendChild(document.createElement("br"))
+		incDIV.appendChild(labREVISION)
+		incDIV.appendChild(revision)
+		incDIV.appendChild(document.createElement("br"))
+		incDIV.appendChild(cerrar)
 		incDIV.appendChild(document.createElement("br"))
 		return incDIV
 	},

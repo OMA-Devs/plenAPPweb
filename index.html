@@ -69,7 +69,13 @@
    <div id="content">
 
    </div>
-   <script>coreACTIONS.getPresets(), calls.genericLoad(['type'],['show'],'auth.php','content')</script>
+   <script>
+   coreACTIONS.getPresets();
+   calls.genericLoad(['type'],['show'],'auth.php','content');
+   window.onbeforeunload = function() {
+    console.log("CERRANDO");
+    return null;
+}</script>
 </body>
 
 </html>

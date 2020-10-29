@@ -88,5 +88,45 @@ if ($queryTYPE == "add"){
   $myJSON = json_encode($myJSON);
 
   echo $myJSON;
+}elseif ($queryTYPE == "close"){
+  $queryID = $_REQUEST["id"];
+  $queryFECHA = $_REQUEST["fecha"];
+  $queryLLAMADAS = $_REQUEST["llamadas"];
+  $queryINCIDENCIA = $_REQUEST["incidencia"];
+  $queryRESOLUCION = $_REQUEST["resolucion"];
+  $queryLLAMADADE = $_REQUEST["llamadaDE"];
+  $queryTELEFONOGUARDIA = $_REQUEST["telefonoguardia"];
+  $queryINCOMPLETO = $_REQUEST["incompleto"];
+  $queryREVISION = $_REQUEST["revision"];
+  $estacionNAME = $_REQUEST["nombre"];
+
+  $sql = "";
+
+  if ($queryINCOMPLETO == "true" or $queryREVISION == "true"){
+    $sql = "INSERT INTO inc_incompletas (fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
+    VALUES ('".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
+    if ($queryTELEFONOGUARDIA == "si"){
+      $sql = $sql."1)";
+    }else{
+      $sql = $sql."0)";
+    }
+  }else{
+    $sql = "INSERT INTO inc_cerradas (fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
+    VALUES ('".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
+    if ($queryTELEFONOGUARDIA == "si"){
+      $sql = $sql."1)";
+    }else{
+      $sql = $sql."0)";
+    }
+  }
+  $result = $con->query($sql);
+  //echo '<p>'.$result.'</p>';
+  if ($result > 0) {
+    echo "Incidencia traspasada correctamente";
+  } else {
+    echo "Incidencia no traspasada";
+  }
+
+  //var valARR = ["close",id, fecha,llamadas,incidencia, resolucion, llamadaDE, telefonoguardia, incompleto, revision]
 }
 ?>
