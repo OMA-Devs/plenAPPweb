@@ -111,8 +111,8 @@ if ($queryTYPE == "add"){
       $sql = $sql."0)";
     }
   }else{
-    $sql = "INSERT INTO inc_cerradas (fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
-    VALUES ('".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
+    $sql = "INSERT INTO inc_cerradas (id, fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
+    VALUES (".$queryID.",'".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
     if ($queryTELEFONOGUARDIA == "si"){
       $sql = $sql."1)";
     }else{
@@ -122,11 +122,18 @@ if ($queryTYPE == "add"){
   $result = $con->query($sql);
   //echo '<p>'.$result.'</p>';
   if ($result > 0) {
-    echo "Incidencia traspasada correctamente";
+    //echo "Incidencia traspasada correctamente";
+    $sql = "DELETE FROM inc_abiertas WHERE id = ".$queryID;
+    $result = $con->query($sql);
+    if ($result > 0) {
+      echo "Incidencia traspasada correctamente";
+    } else {
+      echo "Incidencia continua ABIERTA. Consultar con administrador.";
+    }
   } else {
     echo "Incidencia no traspasada";
   }
-
+  $con->close();
   //var valARR = ["close",id, fecha,llamadas,incidencia, resolucion, llamadaDE, telefonoguardia, incompleto, revision]
 }
 ?>

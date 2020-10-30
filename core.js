@@ -188,8 +188,6 @@ var calls = {
 	endIncidencia : function(id){
 		//var divTARGET = document.getElementById(id)
 		var fecha = document.getElementById("fecha-"+id).innerHTML
-		//NO PASA LA FECHA EN EL ORDEN CORRECTO. SOLUCIONADO EL PROBLEMA DE LOS GUIONES, PERO Y QUE??!?!?!?!?!?
-		fecha = fecha.replace(/\//g, "-")
 		var nombre = document.getElementById("nombre-"+id).innerHTML.toLowerCase()
 		var llamadas = document.getElementById("llamadas-"+id).innerHTML.split(" ")[1]
 		var incidencia = document.getElementById("incidencia-"+id).value
@@ -202,7 +200,9 @@ var calls = {
 		var keyARR = ["type","id","fecha","nombre","llamadas","incidencia","resolucion","llamadaDE","telefonoguardia","incompleto","revision"]
 		var valARR = ["close",id, fecha,nombre,llamadas,incidencia, resolucion, llamadaDE, telefonoguardia, incompleto, revision]
 		calls.genericLoad(keyARR,valARR,"incidencias.php","")
+		//coreUI.clearIntervals()
 		coreUI.deleteIncidencia(id)
+		//coreUI.initializeIncidencias()
 	},
 	/** Llamada para obtener los presets desde la base de datos. Estos se almacenan posteriormente en la variable presets.
 	 * ES UNA LLAMADA SINCRONA.
@@ -325,9 +325,9 @@ var coreUI = {
 		headDIV.setAttribute("class","w3-center")
 		headDIV.setAttribute("id", "nombre-"+incID)
 		var timeOBJ = document.createElement("p")
-		var incDATE = new Date(obj.fecha)
+		//var incDATE = new Date(obj.fecha)
 		timeOBJ.setAttribute("id", "fecha-"+incID)
-		timeOBJ.innerHTML = incDATE.toLocaleString()
+		timeOBJ.innerHTML = obj.fecha//incDATE.toLocaleString()
 		timeOBJ.setAttribute("class", "w3-center")
 		var llamadas = document.createElement("p")
 		llamadas.setAttribute("id", "llamadas-"+incID)
@@ -415,7 +415,7 @@ var coreUI = {
 		var cerrar = document.createElement("p")
 		cerrar.innerHTML = "Cerrar"
 		cerrar.setAttribute("class", "w3-button w3-border")
-		cerrar.setAttribute("onclick","calls.endIncidencia('"+incID+"')")
+		cerrar.setAttribute("onclick","coreUI.clearIntervals(),calls.endIncidencia('"+incID+"'),coreUI.initializeIncidencias()")
 		cerrar.style.width = "100%"
 		incDIV.appendChild(document.createElement("hr"))
 		incDIV.appendChild(labINCOMPLETO)
