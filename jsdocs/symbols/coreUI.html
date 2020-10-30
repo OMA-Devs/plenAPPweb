@@ -197,6 +197,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/coreUI.html">coreUI</a></li>
 	
+	<li><a href="../symbols/tools.html">tools</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -266,6 +268,43 @@ con ello.</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.clearIntervals">clearIntervals</a></b>()
+								</div>
+								<div class="description">Funcion de conveniencia para limpiar los intervalos generados.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.createIncidencia">createIncidencia</a></b>(obj)
+								</div>
+								<div class="description">Función básica que contiene toda la estructura fisica de una incidencia y sus elementos, así como las ID
+y los formatos correspondientes.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.deleteIncidencia">deleteIncidencia</a></b>(id)
+								</div>
+								<div class="description">Elimina una incidencia del DOM.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.editIncidencia">editIncidencia</a></b>(idTARGET, text)
+								</div>
+								<div class="description">Funcion para modificar campos de una incidencia en el DOM.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.getValue">getValue</a></b>(node)
 								</div>
 								<div class="description">Almacena el nodo entregado como argumento en la variable selectedRow.</div>
@@ -275,9 +314,27 @@ con ello.</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.initializeIncidencias">initializeIncidencias</a></b>()
+								</div>
+								<div class="description">Funcion de inicialización.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.resetGlobals">resetGlobals</a></b>()
 								</div>
 								<div class="description">Funcion de conveniencia para resetear las variables.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.setupIncidencias">setupIncidencias</a></b>()
+								</div>
+								<div class="description">Funcion de creacion inicial del esquema de la pantalla de incidencias.</div>
 							</td>
 						</tr>
 					
@@ -298,6 +355,16 @@ filas esta activa.</div>
 								</div>
 								<div class="description">Modifica el color del nodo entregado para determinar visualmente que la edicion de campos
 esta activa.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">coreUI.<b><a href="../symbols/coreUI.html#.updateIncidencias">updateIncidencias</a></b>()
+								</div>
+								<div class="description">Funcion que engloba la obtención de las incidencias abiertas y la actualizacion correspondiente en el DOM
+si existiese alguna diferencia entre las representadas y las obtenidas.</div>
 							</td>
 						</tr>
 					
@@ -350,6 +417,156 @@ con ello.
 					Method Detail
 				</div>
 				
+					<a name=".clearIntervals"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>clearIntervals</b>()
+					
+					</div>
+					<div class="description">
+						Funcion de conveniencia para limpiar los intervalos generados. Por el momento, solo existe
+el intervalo de actualizaciones.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/_global_.html#incidenciasInterval">incidenciasInterval</a></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".createIncidencia"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>createIncidencia</b>(obj)
+					
+					</div>
+					<div class="description">
+						Función básica que contiene toda la estructura fisica de una incidencia y sus elementos, así como las ID
+y los formatos correspondientes. Esta funcion hace uso del objeto presets directamente.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>obj</b>
+									
+								</dt>
+								<dd>Objeto de incidencia, que contiene todos los datos para llenar la estructura.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".deleteIncidencia"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>deleteIncidencia</b>(id)
+					
+					</div>
+					<div class="description">
+						Elimina una incidencia del DOM. No la elimina de incAbiertas, ni de la tabla de incidencias abiertas.
+ES UNA FUNCION MERAMENTE GRAFICA.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>id</b>
+									
+								</dt>
+								<dd>Cadena con el ID de la incidencia a eliminar.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".editIncidencia"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>editIncidencia</b>(idTARGET, text)
+					
+					</div>
+					<div class="description">
+						Funcion para modificar campos de una incidencia en el DOM. Existe para economizar las actualizaciones del DOM
+y no estar redibujando constantemente los elementos.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>idTARGET</b>
+									
+								</dt>
+								<dd>ID de la incidencia objetivo.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>text</b>
+									
+								</dt>
+								<dd>Texto interior del objeto a modificar.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".getValue"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -394,6 +611,34 @@ Además, cambia el color de fondo del nodo para distinguir la seleccion.
 
 					<hr />
 				
+					<a name=".initializeIncidencias"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>initializeIncidencias</b>()
+					
+					</div>
+					<div class="description">
+						Funcion de inicialización. Limpia los posibles intervalos creados en otras partes de la aplicación,
+ejecuta la funcion de setup para limpiar el DIV content y efectua una actualización inmediatamente.
+Tras eso, inicia el intervalo de actualización de incidencias y comienza el bucle de gestión en tiempo
+real.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".resetGlobals"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -428,6 +673,32 @@ pero programaticamente marcado como seleccionado.
 								<dd><a href="../symbols/_global_.html#delRow">delRow</a></dd>
 							
 							</dl>
+						
+
+					<hr />
+				
+					<a name=".setupIncidencias"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>setupIncidencias</b>()
+					
+					</div>
+					<div class="description">
+						Funcion de creacion inicial del esquema de la pantalla de incidencias. Crea la primera visualizacion y obtiene
+los datos necesarios de la base de datos.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
 						
 
 					<hr />
@@ -518,6 +789,44 @@ esta activa. Ademas activa/desactiva la variable global edit.
 							</dl>
 						
 
+					<hr />
+				
+					<a name=".updateIncidencias"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">coreUI.</span><b>updateIncidencias</b>()
+					
+					</div>
+					<div class="description">
+						Funcion que engloba la obtención de las incidencias abiertas y la actualizacion correspondiente en el DOM
+si existiese alguna diferencia entre las representadas y las obtenidas. Por el momento solo actualiza las
+llamadas recibidas. Tambien crea las que no estén representadas.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/coreUI.html#.editIncidencia">coreUI.editIncidencia</a></dd>
+							
+								<dd><a href="../symbols/calls.html#.getIncAbiertas">calls.getIncAbiertas</a></dd>
+							
+								<dd><a href="../symbols/coreUI.html#.createIncidencia">coreUI.createIncidencia</a></dd>
+							
+							</dl>
+						
+
 					
 				
 			
@@ -532,7 +841,7 @@ esta activa. Ademas activa/desactiva la variable global edit.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Oct 25 2020 14:08:05 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Oct 30 2020 21:34:25 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

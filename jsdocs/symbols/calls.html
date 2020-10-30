@@ -197,6 +197,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/coreUI.html">coreUI</a></li>
 	
+	<li><a href="../symbols/tools.html">tools</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -265,9 +267,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">calls.<b><a href="../symbols/calls.html#.endIncidencia">endIncidencia</a></b>(id)
+								</div>
+								<div class="description">Función para gestionar las llamadas necesarias al servidor en el cierre de incidencias.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">calls.<b><a href="../symbols/calls.html#.genericLoad">genericLoad</a></b>(keyARR, valARR, fileTARGET, divTARGET)
 								</div>
 								<div class="description">Llamada generica a archivos php del servidor.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">calls.<b><a href="../symbols/calls.html#.getIncAbiertas">getIncAbiertas</a></b>()
+								</div>
+								<div class="description">Llamada para obtener las incidencias abiertas desde la base de datos.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">calls.<b><a href="../symbols/calls.html#.getPresets">getPresets</a></b>()
+								</div>
+								<div class="description">Llamada para obtener los presets desde la base de datos.</div>
 							</td>
 						</tr>
 					
@@ -286,6 +315,15 @@ ul.inheritsList
 								<div class="fixedFont">calls.<b><a href="../symbols/calls.html#.logout">logout</a></b>()
 								</div>
 								<div class="description">Función de Logout.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">calls.<b><a href="../symbols/calls.html#.queryHistorico">queryHistorico</a></b>()
+								</div>
+								<div class="description">Llamada específica al servidor para los historicos.</div>
 							</td>
 						</tr>
 					
@@ -336,6 +374,46 @@ ul.inheritsList
 				<div class="sectionTitle">
 					Method Detail
 				</div>
+				
+					<a name=".endIncidencia"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">calls.</span><b>endIncidencia</b>(id)
+					
+					</div>
+					<div class="description">
+						Función para gestionar las llamadas necesarias al servidor en el cierre de incidencias. Crea el query para
+entregar todos los datos y que se ejecute la lógica correspondiente desde el servidor. La incidencia puede
+ir a incidencias cerradas o incidencias incompletas dependiendo de las opciones seleccionadas, ademas de
+eliminarse de la tabla de incidencias abiertas.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>id</b>
+									
+								</dt>
+								<dd>Cadena con el NUMERO de incidencia. Se utiliza solo el número para seleccionar los campos
+que correspondan de la incidencia examinando el DOM.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
 				
 					<a name=".genericLoad"> </a>
 					<div class="fixedFont">&lt;static&gt; 
@@ -389,6 +467,72 @@ respuesta se dará en un alert, y si no se modificará el elemento entregado.</d
 						
 						
 						
+						
+
+					<hr />
+				
+					<a name=".getIncAbiertas"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">calls.</span><b>getIncAbiertas</b>()
+					
+					</div>
+					<div class="description">
+						Llamada para obtener las incidencias abiertas desde la base de datos. La respuesta se almacena como objeto en la variable
+incAbiertas. Esta función es la llamada base de la funcionalidad en tiempo real de la aplicación. ES UNA LLAMADA SINCRONA.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/_global_.html#incAbiertas">incAbiertas</a></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".getPresets"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">calls.</span><b>getPresets</b>()
+					
+					</div>
+					<div class="description">
+						Llamada para obtener los presets desde la base de datos. Estos se almacenan posteriormente en la variable presets.
+ES UNA LLAMADA SINCRONA.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/_global_.html#presets">presets</a></dd>
+							
+							</dl>
 						
 
 					<hr />
@@ -458,6 +602,39 @@ Modifica la funcion userConnected.
 							</dl>
 						
 
+					<hr />
+				
+					<a name=".queryHistorico"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">calls.</span><b>queryHistorico</b>()
+					
+					</div>
+					<div class="description">
+						Llamada específica al servidor para los historicos. Crea el query con todos los datos necesarios, desde fecha a tipo de
+incidencia para pasarlo al servidor y lo carga en el DIV correspondiente con una llamada genérica.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/calls.html#.genericLoad">calls.genericLoad</a></dd>
+							
+							</dl>
+						
+
 					
 				
 			
@@ -472,7 +649,7 @@ Modifica la funcion userConnected.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Oct 25 2020 14:08:05 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Oct 30 2020 21:34:25 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

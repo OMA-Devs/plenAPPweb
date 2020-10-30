@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - coreACTIONS</title>
+		<title>JsDoc Reference - tools</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -208,7 +208,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace coreACTIONS
+				Namespace tools
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -225,7 +225,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class coreACTIONS.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class tools.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -238,9 +238,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/coreACTIONS.html#constructor">coreACTIONS</a></b>
+								<b><a href="../symbols/tools.html#constructor">tools</a></b>
 							</div>
-							<div class="description">Acciones dedicadas a una seccion en concreto, con llamadas especificas al servidor y gestiones específicas de UI.</div>
+							<div class="description">Contiene las funciones para manipulacion de numeros, fechas y cadenas reutilizables.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -254,7 +254,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class coreACTIONS.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class tools.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -267,18 +267,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">coreACTIONS.<b><a href="../symbols/coreACTIONS.html#.addRow">addRow</a></b>(target)
+								<div class="fixedFont">tools.<b><a href="../symbols/tools.html#.capitalizeFirstLetter">capitalizeFirstLetter</a></b>(str)
 								</div>
-								<div class="description">Función para añadir filas a la base de datos de la tabla correspondiente.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">coreACTIONS.<b><a href="../symbols/coreACTIONS.html#.editTable">editTable</a></b>(element, target)
-								</div>
-								<div class="description">Función que conjunta la acción de eliminar y editar campos/filas de una tabla representada en el DOM.</div>
+								<div class="description">Convierte la primera letra de cualquier cadena en mayúscula.</div>
 							</td>
 						</tr>
 					
@@ -299,11 +290,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>coreACTIONS</b>
+						<b>tools</b>
 				</div>
 				
 				<div class="description">
-					Acciones dedicadas a una seccion en concreto, con llamadas especificas al servidor y gestiones específicas de UI.
+					Contiene las funciones para manipulacion de numeros, fechas y cadenas reutilizables.
 					
 				</div>
 				
@@ -330,17 +321,16 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".addRow"> </a>
+					<a name=".capitalizeFirstLetter"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">coreACTIONS.</span><b>addRow</b>(target)
+					<span class="light">tools.</span><b>capitalizeFirstLetter</b>(str)
 					
 					</div>
 					<div class="description">
-						Función para añadir filas a la base de datos de la tabla correspondiente. Actualmente se gestiona con alerts
-que solicitan los campos requeridos para crear un registro nuevo, pero se planea modificar la interfaz para que
-se asemeje más a la representada en históricos.php.
+						Convierte la primera letra de cualquier cadena en mayúscula. Se necesita esta función por
+UI, ya que los datos de la base de datos vienen todos en minúscula.
 						
 						
 					</div>
@@ -352,58 +342,10 @@ se asemeje más a la representada en históricos.php.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{String}</span> <b>target</b>
+									<span class="light fixedFont">{String}</span> <b>str</b>
 									
 								</dt>
-								<dd>archivo PHP que debe ejecutar la lógica dependiendo de la tabla que se este intentando
-modificar.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".editTable"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">coreACTIONS.</span><b>editTable</b>(element, target)
-					
-					</div>
-					<div class="description">
-						Función que conjunta la acción de eliminar y editar campos/filas de una tabla representada en el DOM.
-Actualmente se utiliza solo para la sección de Administración, donde se pueden modificar/eliminar
-las estaciones, los responsables y los presets directamente en la base de datos.
-Contiene la logica necesaria para no poder editar y eliminar a la vez.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{HTMLnode}</span> <b>element</b>
-									
-								</dt>
-								<dd>Elemento a MODIFICAR</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>target</b>
-									
-								</dt>
-								<dd>Nombre del archivo PHP que debe efectuar la lógica. En este caso, puede ser
-presets.php, responsables.php o estaciones.php, que contienen cada uno la lógica necesaria para gestinar
-las llamadas generadas por esta funcion.</dd>
+								<dd>Cadena de texto a modificar.</dd>
 							
 							</dl>
 						

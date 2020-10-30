@@ -1,5 +1,4 @@
 //core.js
-//GLOBALES
 /**
  * Representa al usuario conectado. Utilizado para nombrar las incidencias y
  * determinar los permisos dentro de la aplicacion.
@@ -25,12 +24,41 @@ var edit = false //Determina la posibilidad de editar o no una fila
  */
 var delRow = false //Determina la funcion de eliminado de una fila
 
+/** Objeto que contiene los presets para ser utilizados en la interfaz grafica y reducir la
+ * cantidad de peticiones al servidor. Este funcionamiento implica que tras modificar los presets
+ * se debe reiniciar la plataforma.
+ * @member {Object}
+ * @see coreUI.updateIncidencias
+ */
 var presets;
+
+/** Array de incidencias abiertas que se actualiza constantemente en el bucle de actualizacion
+ * de incidencias. Se almacena como un array de objetos de javascript para mejor manipulacion 
+ * y transmision de datos entre capas de la aplicacion.
+ * @member {Array}
+ * @see calls.getIncAbiertas
+ * @see coreUI.updateIncidencias
+ * @see coreUI.editIncidencia
+ */
 var incAbiertas;
 
+/** Variable que almacena el numero que se asigna al crear un intervalo en javascript. Esta variable
+ * almacena el ID del intervalo de actualizacion de las incidencias.
+ * @member {Number}
+ * @see coreUI.initializeIncidencias
+ * @see coreUI.clearIntervals
+ */
 var incidenciasInterval;
 
+/** Contiene las funciones para manipulacion de numeros, fechas y cadenas reutilizables.
+ * @namespace
+*/
 var tools = {
+	/**
+	 * Convierte la primera letra de cualquier cadena en mayúscula. Se necesita esta función por
+	 * UI, ya que los datos de la base de datos vienen todos en minúscula.
+	 * @param {String} str Cadena de texto a modificar.
+	 */
 	capitalizeFirstLetter : function(str) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	  }
@@ -133,6 +161,10 @@ var calls = {
 		coreUI.clearIntervals()
 		calls.genericLoad(['type'],['show'],'auth.php','content')
 	},
+	/** Llamada específica al servidor para los historicos. Crea el query con todos los datos necesarios, desde fecha a tipo de
+	 * incidencia para pasarlo al servidor y lo carga en el DIV correspondiente con una llamada genérica.
+	 * @see calls.genericLoad
+	 */
 	queryHistorico : function(){
 		var startDATE = document.getElementById("date_inicio").value
 		var endDATE = document.getElementById("date_final").value
@@ -145,6 +177,14 @@ var calls = {
 		var valARR = ["request",startDATE, endDATE, estacion,abiertas, incompletas, completadas, revision]
 		calls.genericLoad(keyARR,valARR,"historicos.php","hList")
 	},
+	/**
+	 * Función para gestionar las llamadas necesarias al servidor en el cierre de incidencias. Crea el query para
+	 * entregar todos los datos y que se ejecute la lógica correspondiente desde el servidor. La incidencia puede
+	 * ir a incidencias cerradas o incidencias incompletas dependiendo de las opciones seleccionadas, ademas de
+	 * eliminarse de la tabla de incidencias abiertas.
+	 * @param {String} id Cadena con el NUMERO de incidencia. Se utiliza solo el número para seleccionar los campos
+	 * que correspondan de la incidencia examinando el DOM.
+	 */
 	endIncidencia : function(id){
 		//var divTARGET = document.getElementById(id)
 		var fecha = document.getElementById("fecha-"+id).innerHTML
@@ -163,6 +203,38 @@ var calls = {
 		var valARR = ["close",id, fecha,nombre,llamadas,incidencia, resolucion, llamadaDE, telefonoguardia, incompleto, revision]
 		calls.genericLoad(keyARR,valARR,"incidencias.php","")
 		coreUI.deleteIncidencia(id)
+	},
+	/** Llamada para obtener los presets desde la base de datos. Estos se almacenan posteriormente en la variable presets.
+	 * ES UNA LLAMADA SINCRONA.
+	 * @see presets
+	 */
+	getPresets : function(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				presets = JSON.parse(this.responseText)
+			}
+		};
+		var query = "incidencias.php?type=getPresets"
+		console.log(query)
+		xhttp.open("GET", query, false);
+		xhttp.send();	
+	},
+	/** Llamada para obtener las incidencias abiertas desde la base de datos. La respuesta se almacena como objeto en la variable
+	 * incAbiertas. Esta función es la llamada base de la funcionalidad en tiempo real de la aplicación. ES UNA LLAMADA SINCRONA.
+	 * @see incAbiertas
+	 */
+	getIncAbiertas : function(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				incAbiertas = JSON.parse(this.responseText)
+			}
+		};
+		var query = "incidencias.php?type=getAbiertas"
+		console.log(query)
+		xhttp.open("GET", query, false);
+		xhttp.send();	
 	}
 }
 
@@ -234,6 +306,11 @@ var coreUI = {
 			delRow = true
 		}
 	},
+	/**
+	 * Función básica que contiene toda la estructura fisica de una incidencia y sus elementos, así como las ID
+	 * y los formatos correspondientes. Esta funcion hace uso del objeto presets directamente.
+	 * @param {Object} obj Objeto de incidencia, que contiene todos los datos para llenar la estructura.
+	 */
 	createIncidencia : function(obj){
 		//determinamos el ID de la incidencia.
 		var incID = obj.id
@@ -351,19 +428,38 @@ var coreUI = {
 		incDIV.appendChild(document.createElement("br"))
 		return incDIV
 	},
+	/**
+	 * Elimina una incidencia del DOM. No la elimina de incAbiertas, ni de la tabla de incidencias abiertas.
+	 * ES UNA FUNCION MERAMENTE GRAFICA.
+	 * @param {String} id Cadena con el ID de la incidencia a eliminar.
+	 */
 	deleteIncidencia : function(id){
 		var inc = document.getElementById(id)
 		var parentNODE = inc.parentElement
 		parentNODE.removeChild(inc)
 		console.log("Incidencia eliminada")
 	},
+	/**
+	 * Funcion para modificar campos de una incidencia en el DOM. Existe para economizar las actualizaciones del DOM
+	 * y no estar redibujando constantemente los elementos.
+	 * @param {String} idTARGET ID de la incidencia objetivo.
+	 * @param {String} text Texto interior del objeto a modificar.
+	 */
 	editIncidencia : function(idTARGET, text){
 		var inc = document.getElementById(idTARGET)
 		inc.innerHTML = text
 		console.log("Incidencia modificada")
 	},
+	/** 
+	 * Funcion que engloba la obtención de las incidencias abiertas y la actualizacion correspondiente en el DOM
+	 * si existiese alguna diferencia entre las representadas y las obtenidas. Por el momento solo actualiza las
+	 * llamadas recibidas. Tambien crea las que no estén representadas.
+	 * @see coreUI.editIncidencia
+	 * @see calls.getIncAbiertas
+	 * @see coreUI.createIncidencia
+	 */
 	updateIncidencias : function(){
-		coreACTIONS.getIncAbiertas()
+		calls.getIncAbiertas()
 		var contenido = document.getElementById("content")
 		for (var i = 0; i<incAbiertas.length; i++){
 			//console.log(incAbiertas[i])
@@ -386,22 +482,37 @@ var coreUI = {
 			}
 		}
 	},
+	/** 
+	 * Funcion de creacion inicial del esquema de la pantalla de incidencias. Crea la primera visualizacion y obtiene
+	 * los datos necesarios de la base de datos.
+	 */
 	setupIncidencias : function(){
 		var cont = document.getElementById("content")
 		cont.innerHTML = ""
 		//var incCONT = document.createElement("div")
 		cont.setAttribute("class", "w3-cell-row")
-		coreACTIONS.getIncAbiertas()
+		calls.getIncAbiertas()
 		for (var i = 0; i<incAbiertas.length; i++){
 			cont.appendChild(coreUI.createIncidencia(incAbiertas[i]))
 		}
 	},
+	/**
+	 * Funcion de inicialización. Limpia los posibles intervalos creados en otras partes de la aplicación,
+	 * ejecuta la funcion de setup para limpiar el DIV content y efectua una actualización inmediatamente.
+	 * Tras eso, inicia el intervalo de actualización de incidencias y comienza el bucle de gestión en tiempo
+	 * real.
+	 */
 	initializeIncidencias: function(){
 		coreUI.clearIntervals()
 		coreUI.setupIncidencias()
 		coreUI.updateIncidencias()
 		incidenciasInterval = setInterval(coreUI.updateIncidencias, 1500)
 	},
+	/**
+	 * Funcion de conveniencia para limpiar los intervalos generados. Por el momento, solo existe
+	 * el intervalo de actualizaciones.
+	 * @see incidenciasInterval
+	 */
 	clearIntervals : function(){
 		clearInterval(incidenciasInterval)
 	}
@@ -412,6 +523,16 @@ var coreUI = {
  * @namespace
  */
 var coreACTIONS = {
+	/**
+	 * Función que conjunta la acción de eliminar y editar campos/filas de una tabla representada en el DOM.
+	 * Actualmente se utiliza solo para la sección de Administración, donde se pueden modificar/eliminar
+	 * las estaciones, los responsables y los presets directamente en la base de datos.
+	 * Contiene la logica necesaria para no poder editar y eliminar a la vez.
+	 * @param {HTMLnode} element Elemento a MODIFICAR
+	 * @param {String} target Nombre del archivo PHP que debe efectuar la lógica. En este caso, puede ser
+	 * presets.php, responsables.php o estaciones.php, que contienen cada uno la lógica necesaria para gestinar
+	 * las llamadas generadas por esta funcion. 
+	 */
 	editTable : function(element, target){
 		if (edit == true && delRow == true){
 			alert("Edicion y eliminado estan activados a la vez. Desactiva uno")
@@ -437,7 +558,7 @@ var coreACTIONS = {
 				calls.genericLoad(keyARR,valARR,target,"")
 				coreUI.resetGlobals()
 				if (target == "presets.php"){
-					coreACTIONS.getPresets()
+					calls.getPresets()
 				}
 			}
 			if (delRow == true){
@@ -451,13 +572,20 @@ var coreACTIONS = {
 						calls.genericLoad(["type"],["show"],target,"content")
 						coreUI.resetGlobals()
 						if (target == "presets.php"){
-							coreACTIONS.getPresets()
+							calls.getPresets()
 						}
 					}
 				}
 			}
 		}
 	},
+	/**
+	 * Función para añadir filas a la base de datos de la tabla correspondiente. Actualmente se gestiona con alerts
+	 * que solicitan los campos requeridos para crear un registro nuevo, pero se planea modificar la interfaz para que
+	 * se asemeje más a la representada en históricos.php. 
+	 * @param {String} target archivo PHP que debe ejecutar la lógica dependiendo de la tabla que se este intentando
+	 * modificar. 
+	 */
 	addRow : function(target){
 		//Obtenemos los headers de la tabla
 		var tab = document.getElementById("activeTable")
@@ -482,31 +610,7 @@ var coreACTIONS = {
 		calls.genericLoad(["type"],["show"],target,"content")
 		coreUI.resetGlobals()
 		if (target == "presets.php"){
-			coreACTIONS.getPresets()
+			calls.getPresets()
 		}
-	},
-	getPresets : function(){
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				presets = JSON.parse(this.responseText)
-			}
-		};
-		var query = "incidencias.php?type=getPresets"
-		console.log(query)
-		xhttp.open("GET", query, false);
-		xhttp.send();	
-	},
-	getIncAbiertas : function(){
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				incAbiertas = JSON.parse(this.responseText)
-			}
-		};
-		var query = "incidencias.php?type=getAbiertas"
-		console.log(query)
-		xhttp.open("GET", query, false);
-		xhttp.send();	
 	}
 }
