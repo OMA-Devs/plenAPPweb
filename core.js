@@ -343,6 +343,7 @@ var coreUI = {
 		incLAB.innerHTML = "INCIDENCIA: "
 		var selINC = document.createElement("select")
 		selINC.setAttribute("id", "incidencia-"+incID)
+		selINC.setAttribute("style", "width: 40%")
 		for (var x = 0; x<presets.incidencias.length; x++){
 			var opt = document.createElement("option")
 			opt.value = presets.incidencias[x]
@@ -358,6 +359,7 @@ var coreUI = {
 		incLAB.innerHTML = "RESOLUCION: "
 		var selINC = document.createElement("select")
 		selINC.setAttribute("id", "resoluciones-"+incID)
+		selINC.setAttribute("style", "width: 40%")
 		for (var x = 0; x<presets.resoluciones.length; x++){
 			var opt = document.createElement("option")
 			opt.value = presets.resoluciones[x]
@@ -373,6 +375,7 @@ var coreUI = {
 		incLAB.innerHTML = "LLAMADA DE: "
 		var selINC = document.createElement("select")
 		selINC.setAttribute("id", "llamadaDE-"+incID)
+		selINC.setAttribute("style", "width: 40%")
 		for (var x = 0; x<presets.llamadaDE.length; x++){
 			var opt = document.createElement("option")
 			opt.value = presets.llamadaDE[x]
@@ -388,6 +391,7 @@ var coreUI = {
 		labelTELF.innerHTML = "TELEFONO DE GUARDIA: "
 		var selectTELF = document.createElement("select")
 		selectTELF.setAttribute("id","telefonoguardia-"+incID)
+		selectTELF.setAttribute("style", "width: 40%")
 		var opYES = document.createElement("option")
 		opYES.setAttribute("value", "si")
 		opYES.innerHTML = "si"

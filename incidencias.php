@@ -38,7 +38,7 @@ if ($queryTYPE == "add"){
       $sql = "UPDATE inc_abiertas SET llamadas = ".$actLLAMADAS." WHERE estacion = '".$estacionNAME."' AND terminada = 0";
       //echo $sql;
       $result = $con->query($sql);
-      echo 'Registro actualizado.</p>';
+      echo 'Registro actualizado.';
     } else {
       //Insertamos la fila en la tabla correspondiente.
       $sql = "INSERT INTO inc_abiertas (fecha, estacion, gestion, terminada, llamadas) VALUES ('".$queryFECHA."','".$estacionNAME."',0,0,1)";
@@ -103,8 +103,8 @@ if ($queryTYPE == "add"){
   $sql = "";
 
   if ($queryINCOMPLETO == "true" or $queryREVISION == "true"){
-    $sql = "INSERT INTO inc_incompletas (fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
-    VALUES ('".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
+    $sql = "INSERT INTO inc_incompletas (id,fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
+    VALUES (".$queryID.",'".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
     if ($queryTELEFONOGUARDIA == "si"){
       $sql = $sql."1)";
     }else{
@@ -112,7 +112,7 @@ if ($queryTYPE == "add"){
     }
   }else{
     $sql = "INSERT INTO inc_cerradas (id, fecha, estacion, gestion, terminada, llamadas, incidencia, resolucion, llamadade, telfguardia)
-    VALUES (".$queryID.",'".$queryFECHA."','".$estacionNAME."',0,0,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
+    VALUES (".$queryID.",'".$queryFECHA."','".$estacionNAME."',0,1,".$queryLLAMADAS.",'".$queryINCIDENCIA."','".$queryRESOLUCION."','".$queryLLAMADADE."',";
     if ($queryTELEFONOGUARDIA == "si"){
       $sql = $sql."1)";
     }else{
