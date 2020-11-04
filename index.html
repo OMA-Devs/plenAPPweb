@@ -37,32 +37,49 @@
 <body>
    <div id="header" class="w3-center">
       <img src="Logo.png" class = "w3-center"><br>
-      <div id="navBar" class="w3-bar">
-    <p class ="fa fa-user-o w3-button w3-card-2 w3-border w3-center w3-bar-item"
+      <div id="navBar" class="w3-bar w3-card-2 w3-border">
+    <a class ="fa fa-user-o w3-button w3-center w3-bar-item"
       onclick="calls.genericLoad(['user'],[userConnected.nombre],'user.php','content')"
       style = "display:none"
-      id = "user"></p>
-	 <!--p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
-	   style="display: none"
-	   onclick="coreUI.clearIntervals(), calls.genericLoad(['type'],['show'],'estaciones.php','content'), coreUI.resetGlobals()">ESTACIONES</p-->
-    <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
-      onclick = "calls.genericLoad(['type'],['show'],'historicos.php','content')"
-      style="display: none"
-      id = "historicos">HISTORICOS</p>
-	 <!--p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
-	   style="display: none">RESPONSABLES</p-->
-	 <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
-	   style="display: none"
-      onclick="coreUI.initializeIncidencias()"
-      id = "incidencias">INCIDENCIA</p>
-   <p class="w3-bar-item w3-center w3-button w3-card-2 w3-border"
-      onclick="calls.genericLoad(['type'],['show'],'admin.php','content')"
-      style="display: none"
-      id = "administracion">ADMINISTRACION</p>
-	 <p class ="fa fa-sign-out w3-button w3-card-2 w3-border w3-center w3-bar-item"
+      id = "user"></a>
+    <div class = "w3-dropdown-hover">
+      <a class="w3-center w3-button"
+        style="display: none"
+        id = "historicos">HISTORICOS</a>
+      <div class ="w3-dropdown-content w3-bar-block w3-card-2">
+        <a class="w3-bar-item w3-button" 
+          onclick = "calls.genericLoad(['type'],['show'],'historicos.php','content')">LISTADO</a>
+        <a class="w3-bar-item w3-button">INFORMES</a>
+      </div>
+    </div>
+    <div class = "w3-dropdown-hover">
+      <a class="w3-center w3-button"
+        style="display: none"
+        id = "incidencias">INCIDENCIA</a>
+      <div class = "w3-dropdown-content w3-bar-block w3-card-2">
+        <a class = "w3-bar-item w3-button"
+          onclick="coreUI.initializeIncidencias()">ABIERTAS</a>
+        <a class = "w3-bar-item w3-button">CHEQUES ANULADOS</a>
+        <a class = "w3-bar-item w3-button">INCOMPLETAS</a>
+      </div>
+    </div>
+    <div class = "w3-dropdown-hover">
+      <a class="w3-center w3-button"
+        style="display: none"
+        id = "administracion">ADMINISTRACION</a>
+      <div class = "w3-dropdown-content w3-bar-block w3-card-2">
+        <a class = "w3-bar-item w3-button"
+          onclick = "calls.genericLoad(['type'],['show'],'estaciones.php','content')">ESTACIONES</a>
+        <a class = "w3-bar-item w3-button"
+          onclick = "calls.genericLoad(['type'],['show'],'responsables.php','content')">RESPONSABLES</a>
+        <a class = "w3-bar-item w3-button"
+          onclick = "calls.genericLoad(['type'],['show'],'presets.php','content')">PRESETS</a>
+      </div>
+    </div>
+	 <a class ="fa fa-sign-out w3-button w3-center w3-bar-item"
 	   style="display: none"
       onclick="calls.logout()"
-      id = "logout"></p>
+      id = "logout"></a>
       </div>
    </div>
    <hr>
